@@ -21,8 +21,10 @@ hideHideShow(boardScreen,finishScreen,startScreen);
 
 //Starts game
 start.addEventListener("click", event => {
-      event.target.textContent === "Start game"? hideHideShow(finishScreen,startScreen,boardScreen):null;
-      player1.isTurn ? player1ListItem.className = "players active" : null
+
+      event.target.textContent === "Start game" ? hideHideShow(finishScreen,startScreen,boardScreen):null;
+
+      player1.isTurn ? player1ListItem.className = "players active" : null;
 });
 
 
@@ -60,27 +62,42 @@ class Player  {
 
 // BOARD
 class Board {
-  constructor(status,player1WinOrLoose, player2WinOrLoose) {
+  constructor(status,boxCount) {
   this.status = status,
-  this.player1 = player1WinOrLoose,
-  this.player2 = player1WinOrLoose
+  this.boxCount = boxCount
  }
+
 
   get isGameFinished() {
       if(this.status === "player1") {
        hideHideShow(boardScreen,startScreen,finishScreen);
        finishScreen.className = "screen screen-win-one";
        this.status = "start";
+       this.boxCount = 0;
+
 
      } else if (this.status === "player2") {
        hideHideShow(boardScreen,startScreen,finishScreen);
        finishScreen.className = "screen screen-win-two";
        this.status = "start";
+       this.boxCount = 0;
+
      }
+      else if (this.boxCount === 9 && this.status === "start") {
+            console.log("TIE");
+           hideHideShow(boardScreen,startScreen,finishScreen);
+          finishScreen.className = "screen screen-win-tie";
+          this.status = "start";
+          this.boxCount = 0;
+      }
 
   }
+
   get stat() {
      const getBoxes = [...document.querySelectorAll(".box")];
+
+
+
        if (getBoxes[0].className === "box box-filled-1" && getBoxes[1].className === "box box-filled-1" & getBoxes[2].className === "box box-filled-1") {
               this.status = "player1";
 
@@ -115,7 +132,9 @@ class Board {
          this.status = "player2";
        }
 
-
+}
+set counter(boxCount) {
+  this.boxCount += boxCount;
 }
 
 }
@@ -123,10 +142,10 @@ class Board {
 
 const player1 = new Player("Player1", true, "player1" );
 const player2 = new Player("Player 2", false, "player2");
-const gameBoard = new Board("start");
+const gameBoard = new Board("start", 0);
 
 finishScreen.addEventListener("click", event => {
-  
+
    if (event.target.textContent === "New game") {
      let resetBoard = [...document.querySelectorAll(".box")];
       resetBoard.forEach(box => {
@@ -134,9 +153,9 @@ finishScreen.addEventListener("click", event => {
         box.classList.remove("box-filled-1");
 
       });
+      hideHideShow(finishScreen,startScreen,boardScreen);
 
    }
-   hideHideShow(finishScreen,startScreen,boardScreen);
 
 });
 
@@ -173,6 +192,7 @@ box.addEventListener("click", (event) => {
         event.target.classList.add("box-filled-1");
          player1.turn = false;
          player2.turn = true;
+         gameBoard.boxCount += 1;
          player1.setActive();
           player2.setActive();
         }
@@ -184,10 +204,14 @@ box.addEventListener("click", (event) => {
           event.target.classList.add("box-filled-2");
           player2.turn = false;
           player1.turn = true;
+          gameBoard.boxCount += 1;
           player1.setActive();
           player2.setActive();
 
+
         }
+         console.log(gameBoard.boxCount);
         gameBoard.stat;
         gameBoard.isGameFinished;
+
 });
