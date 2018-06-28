@@ -1,7 +1,9 @@
 @charset "UTF-8";
 body {
   background: #fff;
-  font-family: "Montserrat", sans-serif; }
+  font-family: "Montserrat", sans-serif;
+
+}
 
 ul {
   margin: 0;
@@ -15,6 +17,7 @@ h1 {
   text-align: left;
   width: 1.875em; }
 
+
 .button {
   background: #fff;
   border-radius: 4px;
@@ -25,7 +28,8 @@ h1 {
   -webkit-transition: 0.25s ease;
   transition: 0.25s ease; }
   .button:hover {
-    color: #000; }
+    background-color: #ff9999;
+}
 
 .screen {
   text-align: center;
@@ -48,6 +52,9 @@ h1 {
       font-size: 6em; }
     .screen-start .button {
       color: #54D17A; }
+      .screen-start .button:hover {
+        color: white;
+      }
     .screen-start h1 + .button {
       margin-top: 5em; }
   .screen-win p {
