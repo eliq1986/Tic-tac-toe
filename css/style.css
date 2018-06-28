@@ -16,7 +16,14 @@ h1 {
   margin: 0 auto;
   text-align: left;
   width: 1.875em; }
+ input {
 
+   padding: 1em;
+   text-align: center;
+   display: block;
+   margin: 1em auto;
+   width: 40%;
+ }
 
 .button {
   background: #fff;

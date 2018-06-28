@@ -1,4 +1,6 @@
-//DOM ELEMENTS
+//************ DOM ELEMENTS ************//
+!function(){
+  const inputName = document.querySelector("#start header");
 const startScreen = document.getElementById("start");
 const boardScreen = document.getElementById("board");
 const finishScreen = document.getElementById("finish");
@@ -8,6 +10,7 @@ const boxes = document.querySelectorAll(".box");
 const firstRow = [...document.querySelectorAll(".box")].splice(0,3);
 const secondRow = [...document.querySelectorAll(".box")].splice(3,3);
 const thirdRow = [...document.querySelectorAll(".box")].splice(6);
+
 let firstRowDown = [];
 let secondRowDown = [];
 let thirdRowDown = [];
@@ -31,29 +34,29 @@ let diagonal2 = [];
     }
 
 
-//hides board and finish screen
+//******** hides board and finish screen *******//
 const hideHideShow = function(hideScreen,hideScreen2,showScreen) {
    hideScreen.style.display = "none";
    hideScreen2.style.display = "none";
    showScreen.style.display = "block";
-
  }
-//hides on window load and displays start screen
+//********** hides on window load and displays start screen ********//
 hideHideShow(boardScreen,finishScreen,startScreen);
 
-//Starts game
+//******** Starts game**************//
 start.addEventListener("click", event => {
       event.target.textContent === "Start game" ? hideHideShow(finishScreen,startScreen,boardScreen):null;
       player1.isTurn ? player1ListItem.className = "players active" : null;
 });
 
-//PLAYER TEMPLATE
+//************ Basic Player Template *************//
 class Player  {
-  constructor(name,isTurn,playerLi) {
+  constructor(name,isTurn,playerLi,playerClass) {
     this.name = name,
     this.isTurn = isTurn,
     this.playerLi = playerLi
 }
+
     setActive() {
      if (this.isTurn) {
        const player = document.getElementById(this.playerLi);
@@ -70,6 +73,8 @@ class Player  {
  }
 }
 
+
+//************ Board Template ************//
 class Board {
   constructor(status,boxCount,topRow) {
   this.status = status,
@@ -77,6 +82,7 @@ class Board {
 
 
  }
+
 
   get isGameFinished() {
       if(this.status === "player1") {
@@ -127,7 +133,7 @@ class Board {
           if (rowOne.length === 3 || rowTwo.length === 3 || rowThree.length === 3 || dia1.length ===3 || dia2.length === 3 || firstRowD.length === 3 || secondRowD.length === 3 || thirdRowD.length === 3) {
             this.status = "player2";
               }
-              let thirdRowDownCirlce = thirdRowDown.filter(box => box.className === "box box-filled-2");
+              let thirdRowDownCirlce = thirdRowDown.filter(box => box.className === "box box-filled-1");
               let secondRowDownCircle = secondRowDown.filter(box => box.className === "box box-filled-1");
               let firstRowDCircle = firstRowDown.filter(box => box.className === "box box-filled-1");
               let rowOneCircle = firstRow.filter(box => box.className === "box box-filled-1");
@@ -137,7 +143,7 @@ class Board {
               let dia2Circle = diagonal2.filter(box => box.className === "box box-filled-1");
 
              if (rowOneCircle.length === 3 || rowTwoCircle.length === 3 || rowThreeCircle.length === 3 || dia1Circle.length === 3 || dia2Circle.length === 3 || firstRowDCircle.length === 3||
-                 secondRowDownCircle.length === "box box-filled-1" || thirdRowDownCirlce.length === 3) {
+                 secondRowDownCircle.length === 3 || thirdRowDownCirlce.length === 3) {
               this.status = "player1";
           }
        }
@@ -148,6 +154,7 @@ const player1 = new Player("Player1", true, "player1" );
 const player2 = new Player("Player 2", false, "player2");
 const gameBoard = new Board("start", 0);
 
+//************ Finished Button ************//
 finishScreen.addEventListener("click", event => {
 
    if (event.target.textContent === "New game") {
@@ -157,24 +164,19 @@ finishScreen.addEventListener("click", event => {
   });
       finishScreen.className = "screen screen-win";
       hideHideShow(finishScreen,startScreen,boardScreen);
-
    }
 
 });
 
 box.addEventListener("mouseover", (event)=> {
 
- if (event.target.className === "box box-filled-1" || event.target.className === "box box-filled-2" ) {
-    player1.isTurn ? event.target.style.backgroundImage = "" : null;
-    player2.isTurn ? event.target.style.backgroundImage = "" : null;
- }
-   else {
-         player1.isTurn ? event.target.style.backgroundImage = "url('img/o.svg')" : null;
-         player2.isTurn ? event.target.style.backgroundImage = "url('img/x.svg')" : null;
-       }
-})
+ if (event.target.className !== "box box-filled-1" || event.target.className !== "box box-filled-2" ) {
+     player1.isTurn ? event.target.style.backgroundImage = "url('img/o.svg')" : null;
+     player2.isTurn ? event.target.style.backgroundImage = "url('img/x.svg')" : null;
+    }
+});
 
-//Could add via CSS:hover but not touching CSS/HTML
+//************ Removes and add symbols when hovering ************//
 box.addEventListener("mouseout", (event) => {
 
      player1.isTurn ? event.target.style.backgroundImage = "" : null;
@@ -205,3 +207,4 @@ box.addEventListener("click", (event) => {
         gameBoard.isGameFinished;
 
 });
+}();
