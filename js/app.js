@@ -11,11 +11,7 @@ const firstRow = [...document.querySelectorAll(".box")].splice(0,3);
 const secondRow = [...document.querySelectorAll(".box")].splice(3,3);
 const thirdRow = [...document.querySelectorAll(".box")].splice(6);
 
-let firstRowDown = [];
-let secondRowDown = [];
-let thirdRowDown = [];
-let diagonal1 = [];
-let diagonal2 = [];
+let firstRowDown = [],secondRowDown = [],thirdRowDown = [],diagonal1 = [], diagonal2 = [];
 
    for (let i = 0; i<boxes.length; i+=4) {
       diagonal1.push(boxes[i]);
@@ -33,14 +29,23 @@ let diagonal2 = [];
       thirdRowDown.push(boxes[i]);
     }
 
-
 //******** hides board and finish screen *******//
-const hideHideShow = function(hideScreen,hideScreen2,showScreen) {
+const hideHideShow = function(hideScreen,hideScreen2,showScreen,s,count) {
    hideScreen.style.display = "none";
    hideScreen2.style.display = "none";
    showScreen.style.display = "block";
+
  }
+
+ //********function sets winning text**************//
+  const finishContent = function(playerClassName, domElement, winningPhrase) {
+    finishScreen.className = playerClassName;
+    let message = document.querySelector(domElement);
+    message.textContent = winningPhrase;
+  }
+
 //********** hides on window load and displays start screen ********//
+
 hideHideShow(boardScreen,finishScreen,startScreen);
 
 //******** Starts game**************//
@@ -49,14 +54,16 @@ start.addEventListener("click", event => {
       player1.isTurn ? player1ListItem.className = "players active" : null;
 });
 
+
 //************ Basic Player Template *************//
 class Player  {
-  constructor(name,isTurn,playerLi,playerClass) {
+  constructor(name,isTurn,playerLi,playerClass, playerPhrase) {
     this.name = name,
     this.isTurn = isTurn,
-    this.playerLi = playerLi
+    this.playerLi = playerLi,
+    this.playerClass = playerClass,
+    this.playerPhrase = playerPhrase
 }
-
     setActive() {
      if (this.isTurn) {
        const player = document.getElementById(this.playerLi);
@@ -76,43 +83,34 @@ class Player  {
 
 //************ Board Template ************//
 class Board {
-  constructor(status,boxCount,topRow) {
+  constructor(status,boxCount,className, message) {
   this.status = status,
-  this.boxCount = boxCount
+  this.boxCount = boxCount,
+  this.className = className,
+  this.message =  message
 
 
  }
-
-
   get isGameFinished() {
       if(this.status === "player1") {
-
        hideHideShow(boardScreen,startScreen,finishScreen);
-       finishScreen.className = "screen screen-win screen-win-one";
-       let message = document.querySelector(".message");
-       message.textContent = "Player 1 WINS"
-       this.status = "start";
+       finishContent(player1.playerClass,".message", player1.playerPhrase);
+      this.status = "start";
        this.boxCount = 0;
 
 
      } else if (this.status === "player2") {
-
        hideHideShow(boardScreen,startScreen,finishScreen);
-       finishScreen.className = "screen screen-win screen-win-two";
-       let message = document.querySelector(".message");
-       message.textContent = "Player 2 WINS"
+        finishContent(player2.playerClass,".message", player2.playerPhrase);
        this.status = "start";
        this.boxCount = 0;
 
      }
       else if (this.boxCount === 9 && this.status === "start") {
-
            hideHideShow(boardScreen,startScreen,finishScreen);
-          finishScreen.className = "screen screen-win screen-win-tie";
-          let message = document.querySelector(".message");
-          message.textContent = "TIE";
-          this.status = "start";
-          this.boxCount = 0;
+            finishContent(this.className,".message", this.message);
+            this.status = "start";
+            this.boxCount = 0;
 
       }
 
@@ -150,9 +148,9 @@ class Board {
 
    }
 
-const player1 = new Player("Player1", true, "player1" );
-const player2 = new Player("Player 2", false, "player2");
-const gameBoard = new Board("start", 0);
+const player1 = new Player("Player1", true, "player1", "screen screen-win screen-win-one", "Player 1 WINS" );
+const player2 = new Player("Player 2", false, "player2", "screen screen-win screen-win-two","Player 2 WINS");
+const gameBoard = new Board("start", 0, "screen screen-win screen-win-tie", "TIE");
 
 //************ Finished Button ************//
 finishScreen.addEventListener("click", event => {
@@ -170,10 +168,11 @@ finishScreen.addEventListener("click", event => {
 
 box.addEventListener("mouseover", (event)=> {
 
- if (event.target.className !== "box box-filled-1" || event.target.className !== "box box-filled-2" ) {
-     player1.isTurn ? event.target.style.backgroundImage = "url('img/o.svg')" : null;
-     player2.isTurn ? event.target.style.backgroundImage = "url('img/x.svg')" : null;
-    }
+ if (event.target.className !== "box box-filled-1" && event.target.className !== "box box-filled-2" ) {
+   player1.isTurn ? event.target.style.backgroundImage = "url('img/o.svg')" : null;
+   player2.isTurn ? event.target.style.backgroundImage = "url('img/x.svg')" : null;
+ }
+
 });
 
 //************ Removes and add symbols when hovering ************//
