@@ -11,6 +11,8 @@ const firstRow = [...document.querySelectorAll(".box")].splice(0,3);
 const secondRow = [...document.querySelectorAll(".box")].splice(3,3);
 const thirdRow = [...document.querySelectorAll(".box")].splice(6);
 
+
+
 let firstRowDown = [],secondRowDown = [],thirdRowDown = [],diagonal1 = [], diagonal2 = [];
 
    for (let i = 0; i<boxes.length; i+=4) {
@@ -30,12 +32,37 @@ let firstRowDown = [],secondRowDown = [],thirdRowDown = [],diagonal1 = [], diago
     }
 
 //******** hides board and finish screen *******//
-const hideHideShow = function(hideScreen,hideScreen2,showScreen,s,count) {
+const hideHideShow = function(hideScreen,hideScreen2,showScreen) {
    hideScreen.style.display = "none";
    hideScreen2.style.display = "none";
    showScreen.style.display = "block";
 
+   if (showScreen.className === "screen screen-start") {
+     let input = document.createElement("input");
+     input.placeholder = "Enter name and press start";
+     inputName.appendChild(input);
+   }
  }
+
+
+
+const computerMove = function(availBox){
+
+  console.log(availBox);
+
+ let randomNumber = (availBox) =>  Math.floor(Math.random() * availBox.length);
+  let rand = randomNumber(availBox);
+  console.log(rand);
+  availBox[rand].className = "box box-filled-2";
+  player2.turn = false;
+  player1.turn = true;
+  gameBoard.boxCount += 1;
+  player1.setActive();
+  player2.setActive();
+
+
+}
+
 
  //********function sets winning text**************//
   const finishContent = function(playerClassName, domElement, winningPhrase) {
@@ -50,9 +77,24 @@ hideHideShow(boardScreen,finishScreen,startScreen);
 
 //******** Starts game**************//
 start.addEventListener("click", event => {
+  const inputInfo = document.querySelector("#start input");
+  const boardHeader = document.querySelector(".boxes");
+  let inputValue = inputInfo.value;
+   inputValue = inputValue.trim();
+    if (inputValue.length === 0) {
+      event.preventDefault();
+    } else {
       event.target.textContent === "Start game" ? hideHideShow(finishScreen,startScreen,boardScreen):null;
       player1.isTurn ? player1ListItem.className = "players active" : null;
+
+         let player1Name = document.createElement("p");
+       player1Name.textContent = inputInfo.value;
+       boardScreen.insertBefore(player1Name, boardHeader);
+     }
+
 });
+
+
 
 
 //************ Basic Player Template *************//
@@ -148,9 +190,11 @@ class Board {
 
    }
 
-const player1 = new Player("Player1", true, "player1", "screen screen-win screen-win-one", "Player 1 WINS" );
-const player2 = new Player("Player 2", false, "player2", "screen screen-win screen-win-two","Player 2 WINS");
-const gameBoard = new Board("start", 0, "screen screen-win screen-win-tie", "TIE");
+   const player1 = new Player("Player1", true, "player1", "screen screen-win screen-win-one", "Player 1 WINS" );
+   const player2 = new Player("Player 2", false, "player2", "screen screen-win screen-win-two","Player 2 WINS");
+   const gameBoard = new Board("start", 0, "screen screen-win screen-win-tie", "TIE");
+
+
 
 //************ Finished Button ************//
 finishScreen.addEventListener("click", event => {
@@ -183,6 +227,9 @@ box.addEventListener("mouseout", (event) => {
 });
 
 box.addEventListener("click", (event) => {
+  let availableBoxes;
+
+
 
       if(player1.isTurn === true  && event.target.className !== "box box-filled-1" && event.target.className !== "box box-filled-2" ) {
          event.target.classList.add("box-filled-1");
@@ -191,19 +238,21 @@ box.addEventListener("click", (event) => {
          gameBoard.boxCount += 1;
          player1.setActive();
           player2.setActive();
+          let boxs = [...boxes];
+            availableBoxes  = boxs.filter(box => box.className !== "box box-filled-1" && box.className !== "box box-filled-2");
+
+              gameBoard.boardStatus;
+              gameBoard.isGameFinished;
+
+          if  (player2.isTurn) {
+              computerMove(availableBoxes);
+
+              gameBoard.boardStatus;
+              gameBoard.isGameFinished;
+
+            }
         }
 
-        else if (player2.isTurn === true && event.target.className !== "box box-filled-2" && event.target.className !== "box box-filled-1") {
-          event.target.classList.add("box-filled-2");
-          player2.turn = false;
-          player1.turn = true;
-          gameBoard.boxCount += 1;
-          player1.setActive();
-          player2.setActive();
-    }
-      ;
-        gameBoard.boardStatus;
-        gameBoard.isGameFinished;
 
 });
 }();

@@ -25,6 +25,7 @@ h1 {
    width: 40%;
  }
 
+
 .button {
   background: #fff;
   border-radius: 4px;
@@ -100,6 +101,12 @@ h1 {
     .screen-win-two p:before {
       content: "×";
       top: 4.5rem; }
+      .board > p   {
+        width: 40%;
+        font-size: 2em;
+        font-weight: bold;
+        text-align: center;
+      }
 
 .board {
   padding-top: 1em; }
