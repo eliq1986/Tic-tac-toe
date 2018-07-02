@@ -101,12 +101,21 @@ h1 {
     .screen-win-two p:before {
       content: "×";
       top: 4.5rem; }
-      .board > p   {
-        width: 40%;
+      .p1, .p2{
+
         font-size: 2em;
-        font-weight: bold;
-        text-align: center;
+        display: inline-block;
+        width: 45%;
+      text-align: center;
       }
+      .p1{
+          padding-left: 2em;
+      }
+      .p2 {
+        padding-right: 1em;
+      }
+
+
 
 .board {
   padding-top: 1em; }

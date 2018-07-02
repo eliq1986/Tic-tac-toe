@@ -48,17 +48,17 @@ const hideHideShow = function(hideScreen,hideScreen2,showScreen) {
 
 const computerMove = function(availBox){
 
-  console.log(availBox);
-
  let randomNumber = (availBox) =>  Math.floor(Math.random() * availBox.length);
   let rand = randomNumber(availBox);
-  console.log(rand);
   availBox[rand].className = "box box-filled-2";
   player2.turn = false;
   player1.turn = true;
-  gameBoard.boxCount += 1;
   player1.setActive();
-  player2.setActive();
+   player2.setActive();
+  gameBoard.boxCount += 1;
+
+                          gameBoard.boardStatus;
+                          gameBoard.isGameFinished;
 
 
 }
@@ -68,7 +68,8 @@ const computerMove = function(availBox){
   const finishContent = function(playerClassName, domElement, winningPhrase) {
     finishScreen.className = playerClassName;
     let message = document.querySelector(domElement);
-    message.textContent = winningPhrase;
+    let winning = `${winningPhrase} is the winner`;
+    message.textContent = winning;
   }
 
 //********** hides on window load and displays start screen ********//
@@ -88,8 +89,14 @@ start.addEventListener("click", event => {
       player1.isTurn ? player1ListItem.className = "players active" : null;
 
          let player1Name = document.createElement("p");
+         player1Name.setAttribute("class", "p2")
        player1Name.textContent = inputInfo.value;
        boardScreen.insertBefore(player1Name, boardHeader);
+
+       let player2Name = document.createElement("p");
+          player2Name.setAttribute("class", "p1")
+     player2Name.textContent = "Computer";
+     boardScreen.insertBefore(player2Name, boardHeader);
      }
 
 });
@@ -135,25 +142,30 @@ class Board {
  }
   get isGameFinished() {
       if(this.status === "player1") {
+
        hideHideShow(boardScreen,startScreen,finishScreen);
-       finishContent(player1.playerClass,".message", player1.playerPhrase);
+       finishContent(player1.playerClass,".message", document.querySelector("#board p").textContent);
       this.status = "start";
        this.boxCount = 0;
+       player1.turn = true;
+       player2.turn = false;
 
 
      } else if (this.status === "player2") {
        hideHideShow(boardScreen,startScreen,finishScreen);
-        finishContent(player2.playerClass,".message", player2.playerPhrase);
+        finishContent(player2.playerClass,".message", "Computer");
        this.status = "start";
        this.boxCount = 0;
-
+       player1.turn = true;
+       player2.turn = false;
      }
       else if (this.boxCount === 9 && this.status === "start") {
            hideHideShow(boardScreen,startScreen,finishScreen);
             finishContent(this.className,".message", this.message);
             this.status = "start";
             this.boxCount = 0;
-
+            player1.turn = true;
+            player2.turn = false;
       }
 
   }
@@ -214,7 +226,7 @@ box.addEventListener("mouseover", (event)=> {
 
  if (event.target.className !== "box box-filled-1" && event.target.className !== "box box-filled-2" ) {
    player1.isTurn ? event.target.style.backgroundImage = "url('img/o.svg')" : null;
-   player2.isTurn ? event.target.style.backgroundImage = "url('img/x.svg')" : null;
+   //player2.isTurn ? event.target.style.backgroundImage = "url('img/x.svg')" : null;
  }
 
 });
@@ -232,6 +244,7 @@ box.addEventListener("click", (event) => {
 
 
       if(player1.isTurn === true  && event.target.className !== "box box-filled-1" && event.target.className !== "box box-filled-2" ) {
+
          event.target.classList.add("box-filled-1");
          player1.turn = false;
          player2.turn = true;
@@ -244,13 +257,15 @@ box.addEventListener("click", (event) => {
               gameBoard.boardStatus;
               gameBoard.isGameFinished;
 
-          if  (player2.isTurn) {
+        } if (player2.isTurn === true) {
+           document.body.requestPointerLock();
+            window.setTimeout(function() {
               computerMove(availableBoxes);
+            }, 1000);
 
-              gameBoard.boardStatus;
-              gameBoard.isGameFinished;
-
-            }
+           window.setTimeout(function() {
+             document.exitPointerLock();
+           },1000);
         }
 
 
