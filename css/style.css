@@ -1,4 +1,8 @@
 @charset "UTF-8";
+
+* {
+  box-sizing: border-box;
+}
 body {
   background: #fff;
   font-family: "Montserrat", sans-serif;
@@ -18,11 +22,13 @@ h1 {
   width: 1.875em; }
  input {
 
-   padding: 1em;
+   padding: 1.25em 5em;
    text-align: center;
    display: block;
    margin: 1em auto;
-   width: 40%;
+   width: 20%;
+     border-radius: 4px;
+     border: none;
  }
 
 
@@ -32,7 +38,7 @@ h1 {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
   display: block;
   padding: 1.25em 5em;
-  width: 10%;
+  width: 20%;
   margin: 1em auto;
   text-decoration: none;
   -webkit-transition: 0.25s ease;
@@ -105,14 +111,15 @@ h1 {
 
         font-size: 2em;
         display: inline-block;
-        width: 45%;
+        width: 40%;
       text-align: center;
       }
       .p1{
-          padding-left: 2em;
+       text-align: right;
+       width: 45%;
       }
       .p2 {
-        padding-right: 1em;
+
       }
 
 
