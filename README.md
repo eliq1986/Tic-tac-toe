@@ -9,5 +9,8 @@ Built with:
   <img src="https://user-images.githubusercontent.com/6277603/42853511-c0210bc2-89eb-11e8-8eef-963757d0c4a3.png">
   </p>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/6277603/42853511-c0210bc2-89eb-11e8-8eef-963757d0c4a3.png">
+  <img src="https://user-images.githubusercontent.com/6277603/42853542-ea7c8d74-89eb-11e8-948d-36128f25a5e0.png">
+  </p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/6277603/42853542-ea7c8d74-89eb-11e8-948d-36128f25a5e0.png">
   </p>
