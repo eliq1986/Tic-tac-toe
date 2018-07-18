@@ -1,4 +1,6 @@
-//************ DOM ELEMENTS ************//
+
+
+// DOM Reference
 ! function() {
     const inputName = document.querySelector("#start header");
     const startScreen = document.getElementById("start");
@@ -35,7 +37,7 @@
         thirdRowDown.push(boxes[i]);
     }
 
-    //******** hides board and finish screen *******//
+// hides board and finish screen
     const hideHideShow = function(hideScreen, hideScreen2, showScreen) {
         hideScreen.style.display = "none";
         hideScreen2.style.display = "none";
@@ -49,7 +51,7 @@
     }
 
 
-
+  // guesses computer move based on remaining boxes
     const computerMove = function(availBox) {
         let randomNumber = (availBox) => Math.floor(Math.random() * availBox.length);
         let rand = randomNumber(availBox);
@@ -67,7 +69,7 @@
     }
 
 
-    //********function sets winning text**************//
+    //function sets winning text
     const finishContent = function(playerClassName, domElement, winningPhrase) {
         finishScreen.className = playerClassName;
         let message = document.querySelector(domElement);
@@ -75,13 +77,11 @@
         message.textContent = winning;
     }
 
-    //********** hides on window load and displays start screen ********//
-
-
+    // hides on window load and displays start screen
     hideHideShow(boardScreen, finishScreen, startScreen);
 
 
-    //******** Starts game**************//
+    //Starts game
     start.addEventListener("click", event => {
         const inputInfo = document.querySelector("#start input");
         const boardHeader = document.querySelector(".boxes");
@@ -109,7 +109,7 @@
 
 
 
-    //************ Basic Player Template *************//
+    // Basic Player Template
     class Player {
         constructor(name, isTurn, playerLi, playerClass, playerPhrase) {
             this.name = name,
@@ -135,7 +135,7 @@
     }
 
 
-    //************ Board Template ************//
+    //Board Template
     class Board {
         constructor(status, boxCount, className, message) {
             this.status = status,
@@ -213,7 +213,7 @@
 
 
 
-    //************ Finished Button ************//
+    //Finished Button
     finishScreen.addEventListener("click", event => {
 
         if (event.target.textContent === "New game") {
@@ -236,14 +236,14 @@
 
     });
 
-    //************ Removes and add symbols when hovering ************//
+    //Removes and add symbols when hovering
     box.addEventListener("mouseout", (event) => {
 
         player1.isTurn ? event.target.style.backgroundImage = "" : null;
         player2.isTurn ? event.target.style.backgroundImage = "" : null;
     });
 
-    //************ Event adds symbols to board ************//
+    //  Event adds symbols to board
     box.addEventListener("click", (event) => {
         let availableBoxes;
 
@@ -263,7 +263,7 @@
         if (player2.isTurn === true) {
             document.body.requestPointerLock();
             window.setTimeout(function() {
-                computerMove(availableBoxes);
+            computerMove(availableBoxes);
             }, 2000);
 
             window.setTimeout(function() {
