@@ -1,5 +1,7 @@
 # Tic-tac-toe 
 
+###[Demo](https://eliq1986.github.io/Tic-tac-toe/)
+
 Built with:
 1. Vanilla Javascript
 2. OOP 
