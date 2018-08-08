@@ -244,7 +244,7 @@
     });
 
     //  Event adds symbols to board
-    box.addEventListener("click", (event) => {
+    box.addEventListener("mouseup", (event) => {
         let availableBoxes;
 
         if (player1.isTurn === true && event.target.className !== "box box-filled-1" && event.target.className !== "box box-filled-2") {          event.target.classList.add("box-filled-1");
