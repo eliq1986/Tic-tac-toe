@@ -20,22 +20,17 @@
         thirdRowDown = [],
         diagonal1 = [],
         diagonal2 = [];
+function createTicTacToeBoxes(start = 0, length, plusPlusBy, row ) {
+  for (let i = start; i < length; i += plusPlusBy) {
+      row.push(boxes[i]);
+  }
+}
 
-    for (let i = 0; i < boxes.length; i += 4) {
-        diagonal1.push(boxes[i]);
-    }
-    for (let i = 2; i < 7; i += 2) {
-        diagonal2.push(boxes[i]);
-    }
-    for (let i = 0; i < 7; i += 3) {
-        firstRowDown.push(boxes[i]);
-    }
-    for (let i = 1; i < 8; i += 3) {
-        secondRowDown.push(boxes[i]);
-    }
-    for (let i = 2; i < 9; i += 3) {
-        thirdRowDown.push(boxes[i]);
-    }
+createTicTacToeBoxes(0, boxes.length, 4, diagonal1);
+createTicTacToeBoxes(2, 7, 2, diagonal2);
+createTicTacToeBoxes(0, 7, 3, firstRowDown);
+createTicTacToeBoxes(1, 8, 3, secondRowDown);
+createTicTacToeBoxes(2, 9, 3,thirdRowDown);
 
 // hides board and finish screen
     const hideHideShow = function(hideScreen, hideScreen2, showScreen) {
