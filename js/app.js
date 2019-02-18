@@ -1,12 +1,10 @@
 
 
 // DOM Reference
-! function() {
-    const inputName = document.querySelector("#start header");
+!function() {
     const startScreen = document.getElementById("start");
     const boardScreen = document.getElementById("board");
     const finishScreen = document.getElementById("finish");
-    const player1ListItem = document.getElementById("player1");
     const box = document.querySelector(".boxes");
     const boxes = document.querySelectorAll(".box");
     const firstRow = [...document.querySelectorAll(".box")].splice(0, 3);
@@ -20,6 +18,8 @@
         thirdRowDown = [],
         diagonal1 = [],
         diagonal2 = [];
+
+// function creates boxes on board
 function createTicTacToeBoxes(start = 0, length, plusPlusBy, row ) {
   for (let i = start; i < length; i += plusPlusBy) {
       row.push(boxes[i]);
@@ -41,22 +41,21 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
         if (showScreen.className === "screen screen-start") {
             let input = document.createElement("input");
             input.placeholder = "Enter name";
-            inputName.appendChild(input);
+            document.querySelector("#start header").appendChild(input);
         }
     }
 
 
   // guesses computer move based on remaining boxes
-    const computerMove = function(availBox) {
-        let randomNumber = (availBox) => Math.floor(Math.random() * availBox.length);
-        let rand = randomNumber(availBox);
-        availBox[rand].className = "box box-filled-2";
+    const computerMove = availBox => {
+        let generatesRandomNumber = availBox => Math.floor(Math.random() * availBox.length);
+        let randomNumber = generatesRandomNumber(availBox);
+        availBox[randomNumber].className = "box box-filled-2";
         player2.turn = false;
         player1.turn = true;
         player1.setActive();
         player2.setActive();
         gameBoard.boxCount += 1;
-
         gameBoard.boardStatus;
         gameBoard.isGameFinished;
 
@@ -86,7 +85,7 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
             event.preventDefault();
         } else {
             event.target.textContent === "Start game" ? hideHideShow(finishScreen, startScreen, boardScreen) : null;
-            player1.isTurn ? player1ListItem.className = "players active" : null;
+            player1.isTurn ? document.getElementById("player1").className = "players active" : null;
 
             let player1Name = document.createElement("p");
             player1Name.setAttribute("class", "p2")
@@ -127,7 +126,7 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
         set turn(isTurn) {
             this.isTurn = isTurn;
         }
-    }
+    };
 
 
     //Board Template
@@ -139,7 +138,7 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
                 this.message = message
 
 
-        }
+        };
         get isGameFinished() {
             if (this.status === "player1") {
 
@@ -166,12 +165,12 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
                 this.boxCount = 0;
                 player1.turn = true;
                 player2.turn = false;
-            }
+            };
 
-        }
+        };
         set counter(boxCount) {
             this.boxCount += boxCount;
-        }
+        };
         get boardStatus() {
             let thirdRowD = thirdRowDown.filter(box => box.className === "box box-filled-2");
             let secondRowD = secondRowDown.filter(box => box.className === "box box-filled-2");
@@ -184,7 +183,7 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
 
             if (rowOne.length === 3 || rowTwo.length === 3 || rowThree.length === 3 || dia1.length === 3 || dia2.length === 3 || firstRowD.length === 3 || secondRowD.length === 3 || thirdRowD.length === 3) {
                 this.status = "player2";
-            }
+            };
             let thirdRowDownCirlce = thirdRowDown.filter(box => box.className === "box box-filled-1");
             let secondRowDownCircle = secondRowDown.filter(box => box.className === "box box-filled-1");
             let firstRowDCircle = firstRowDown.filter(box => box.className === "box box-filled-1");
@@ -197,10 +196,10 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
             if (rowOneCircle.length === 3 || rowTwoCircle.length === 3 || rowThreeCircle.length === 3 || dia1Circle.length === 3 || dia2Circle.length === 3 || firstRowDCircle.length === 3 ||
                 secondRowDownCircle.length === 3 || thirdRowDownCirlce.length === 3) {
                 this.status = "player1";
-            }
-        }
+            };
+        };
 
-    }
+    };
 
     const player1 = new Player("Player1", true, "player1", "screen screen-win screen-win-one", "Player 1 WINS");
     const player2 = new Player("Player 2", false, "player2", "screen screen-win screen-win-two", "Player 2 WINS");
@@ -218,28 +217,28 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
             });
             finishScreen.className = "screen screen-win";
             hideHideShow(finishScreen, startScreen, boardScreen);
-        }
+        };
 
     });
 
-    box.addEventListener("mouseover", (event) => {
+    box.addEventListener("mouseover", event => {
 
         if (event.target.className !== "box box-filled-1" && event.target.className !== "box box-filled-2") {
             player1.isTurn ? event.target.style.backgroundImage = "url('img/o.svg')" : null;
 
-        }
+        };
 
     });
 
     //Removes and add symbols when hovering
-    box.addEventListener("mouseout", (event) => {
+    box.addEventListener("mouseout", event => {
 
         player1.isTurn ? event.target.style.backgroundImage = "" : null;
         player2.isTurn ? event.target.style.backgroundImage = "" : null;
     });
 
     //  Event adds symbols to board
-    box.addEventListener("mouseup", (event) => {
+    box.addEventListener("mouseup", event => {
         let availableBoxes;
 
         if (player1.isTurn === true && event.target.className !== "box box-filled-1" && event.target.className !== "box box-filled-2") {          event.target.classList.add("box-filled-1");
@@ -264,7 +263,7 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
             window.setTimeout(function() {
                 document.exitPointerLock();
             }, 2000);
-        }
+        };
 
 
     });
