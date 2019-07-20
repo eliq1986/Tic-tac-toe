@@ -77,7 +77,7 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
 
     //Starts game
     start.addEventListener("click", event => {
-      
+
       if(event.target.tagName === "A" ) {
         const inputInfo = document.querySelector("#start input");
         const boardHeader = document.querySelector(".boxes");
@@ -170,7 +170,6 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
                 player1.turn = true;
                 player2.turn = false;
             };
-<<<<<<< HEAD
 
         };
 
@@ -178,13 +177,12 @@ createTicTacToeBoxes(2, 9, 3,thirdRowDown);
             this.boxCount += boxCount;
         };
 
-=======
 
-        };
+
         set counter(boxCount) {
             this.boxCount += boxCount;
         };
->>>>>>> f3edd6e97dc7589075dc43ed70963f8a25003f58
+
         get boardStatus() {
             let thirdRowD = thirdRowDown.filter(box => box.className === "box box-filled-2");
             let secondRowD = secondRowDown.filter(box => box.className === "box box-filled-2");
